@@ -26,12 +26,12 @@ def change_to_datetime(df, column_name):
     return df
 
 def removes_tags(df, column_name):
-    df[column_name] = df[column_name].str.replace(r'<[^<>]*>', '', regex=True)
+    df[column_name] = df[column_name].str.replace(r'<[^<>]*>', ' ', regex=True)
     return df
 
 
 def set_nan(df, column_name):
-    df[column_name] = df[column_name].replace(np.nan, "no coupon")
+    df[column_name] = df[column_name].replace("", "no coupon")
     return df
 
 def add_order_month_column(df):
@@ -64,13 +64,13 @@ def add_delivery_status_column(df):
     df["delivery_status"] = df.apply(check_value_total, axis=1)
     return df
 
-def check_value_total(row):
-    if row["shipping_days"] > 7:
+def check_value_total(df):
+    if df["shipping_days"] > 7:
         val = "delayed"
     else:
         val = "on_time"
     return val
 
 def save_csv(df):
-    return df.to_csv("clean_orders_[ID_NUMBER].csv", "\t")
+    return df.to_csv("clean_orders_[325291052].csv", "\t")
     
